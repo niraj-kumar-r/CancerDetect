@@ -24,6 +24,7 @@ import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.ByteBuffer
 
 
 class MainActivity : AppCompatActivity() {
@@ -81,29 +82,31 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnProceed.setOnClickListener() {
-            var tensorImage = TensorImage(DataType.UINT8)
+            var tensorImage = TensorImage(DataType.FLOAT32)
             tensorImage.load(capturedImageBitmap)
-
+//
             tensorImage = imageProcessor.process(tensorImage)
-
+//
             val model = CancerDetect.newInstance(this)
+//
+            val inputfeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
+            val byteBuffer : ByteBuffer = tensorImage.buffer
 
-            val inputfeature0 =
-                TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.UINT8)
-            inputfeature0.loadBuffer(tensorImage.buffer)
-
+            inputfeature0.loadBuffer(byteBuffer)
+//
             val outputs = model.process(inputfeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer
             val intent = Intent(this, ResultActivity::class.java)
-            intent.putExtra("hasSkinCancer", outputFeature0.floatArray[0] == 1.0f)
-            intent.putExtra("confidenceKeratosisMalignant", outputFeature0.floatArray[1])
-            intent.putExtra("confidenceKeratosisBenign", outputFeature0.floatArray[2])
-            intent.putExtra("confidenceMelanocyticBenign", outputFeature0.floatArray[3])
-            intent.putExtra("confidenceMelanomaMalignant", outputFeature0.floatArray[4])
-
+            intent.putExtra("hasSkinCancer", true)
+//            TODO LATER
+            intent.putExtra("confidenceKeratosisMalignant", outputFeature0.floatArray[0])
+            intent.putExtra("confidenceKeratosisBenign", outputFeature0.floatArray[1])
+            intent.putExtra("confidenceMelanocyticBenign", outputFeature0.floatArray[2])
+            intent.putExtra("confidenceMelanomaMalignant", outputFeature0.floatArray[3])
+//
             startActivity(intent) // Move to the main activity
             finish() // Close this intro activity
-
+//
             model.close()
 
         }
