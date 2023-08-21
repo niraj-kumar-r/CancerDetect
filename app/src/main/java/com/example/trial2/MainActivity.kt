@@ -89,8 +89,9 @@ class MainActivity : AppCompatActivity() {
 //
             val model = CancerDetect.newInstance(this)
 //
-            val inputfeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
-            val byteBuffer : ByteBuffer = tensorImage.buffer
+            val inputfeature0 =
+                TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
+            val byteBuffer: ByteBuffer = tensorImage.buffer
 
             inputfeature0.loadBuffer(byteBuffer)
 //
