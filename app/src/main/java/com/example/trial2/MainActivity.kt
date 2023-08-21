@@ -8,12 +8,20 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.trial2.databinding.ActivityMainBinding
+import com.example.trial2.ml.CancerDetect
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.schema.ResizeBilinearOptions
+import org.tensorflow.lite.support.image.ImageProcessor
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.image.ops.ResizeOp
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
 import java.io.FileOutputStream
 
@@ -25,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val CAMERA_CAPTURE_REQUEST = 103
     private var selectedImageBitmap: Bitmap? = null
     private var capturedImageBitmap: Bitmap? = null
+    private lateinit var predictBtn: Button
 
     private lateinit var binding: ActivityMainBinding
 
@@ -63,6 +72,29 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var imageProcessor = ImageProcessor.Builder()
+            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
+            .build()
+
+
+        binding.btnProceed.setOnClickListener(){
+            var tensorImage = TensorImage(DataType.UINT8)
+            tensorImage.load(capturedImageBitmap)
+
+            tensorImage = imageProcessor.process(tensorImage)
+
+            val model = CancerDetect.newInstance(this)
+
+            val inputfeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.UINT8)
+            inputfeature0.loadBuffer(tensorImage.buffer)
+
+            val outputs = model.process(inputfeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            model.close()
+
+        }
+
         binding.btnCapture.setOnClickListener { checkCameraPermission() }
         binding.btnUpload.setOnClickListener { checkGalleryPermission() }
 
@@ -75,6 +107,7 @@ class MainActivity : AppCompatActivity() {
                 cropActivityResultLauncher.launch(cropIntent)
             }
         }
+
     }
 
     private fun getCropImageIntent(sourceUri: Uri): Intent {
@@ -142,8 +175,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkGalleryPermission() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                /* context = */ this,
+                /* permission = */ Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
@@ -216,4 +249,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }
