@@ -17,7 +17,7 @@ import androidx.core.content.FileProvider
 import com.example.trial2.databinding.ActivityMainBinding
 import com.example.trial2.ml.CancerDetect
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.schema.ResizeBilinearOptions
+import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    @Deprecated("This is deprecated")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CAMERA_CAPTURE_REQUEST || requestCode == GALLERY_PERMISSION_REQUEST) {
@@ -72,12 +73,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         var imageProcessor = ImageProcessor.Builder()
-            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
+            .add(ResizeOp(28, 28, ResizeOp.ResizeMethod.BILINEAR))
+            .add(NormalizeOp(0f, 255f))
             .build()
 
 
-        binding.btnProceed.setOnClickListener(){
+        binding.btnProceed.setOnClickListener() {
             var tensorImage = TensorImage(DataType.UINT8)
             tensorImage.load(capturedImageBitmap)
 
@@ -85,7 +88,8 @@ class MainActivity : AppCompatActivity() {
 
             val model = CancerDetect.newInstance(this)
 
-            val inputfeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.UINT8)
+            val inputfeature0 =
+                TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.UINT8)
             inputfeature0.loadBuffer(tensorImage.buffer)
 
             val outputs = model.process(inputfeature0)
@@ -130,7 +134,6 @@ class MainActivity : AppCompatActivity() {
         val tempFile = File.createTempFile("crop_temp", ".jpg", cacheDir)
         return FileProvider.getUriForFile(this, "${packageName}.provider", tempFile)
     }
-
 
 
     private val cropActivityResultLauncher =
