@@ -94,6 +94,15 @@ class MainActivity : AppCompatActivity() {
 
             val outputs = model.process(inputfeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra("hasSkinCancer", outputFeature0.floatArray[0] == 1.0f)
+            intent.putExtra("confidenceKeratosisMalignant", outputFeature0.floatArray[1])
+            intent.putExtra("confidenceKeratosisBenign", outputFeature0.floatArray[2])
+            intent.putExtra("confidenceMelanocyticBenign", outputFeature0.floatArray[3])
+            intent.putExtra("confidenceMelanomaMalignant", outputFeature0.floatArray[4])
+
+            startActivity(intent) // Move to the main activity
+            finish() // Close this intro activity
 
             model.close()
 
