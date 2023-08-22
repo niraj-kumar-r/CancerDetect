@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("confidenceMelanomaMalignant", outputFeature0.floatArray[3])
 //
             startActivity(intent) // Move to the main activity
-            finish() // Close this intro activity
+            //finish() // Close this intro activity
 //
             model.close()
 
