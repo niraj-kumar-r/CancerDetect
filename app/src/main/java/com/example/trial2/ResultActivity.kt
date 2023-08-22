@@ -41,7 +41,7 @@ class ResultActivity : AppCompatActivity() {
 
         val hasSkinCancer = isKeratosisBenign()||isMelanocyticBenign()||isMelanomaMalignant()||isKeratosisMalignant()
 
-        // Retrieve the result from your ML model (true for skin cancer, false for no cancer)...
+        // Retrieve the result from your ML model (true for skin cancer, false for no cancer)
 
         if (hasSkinCancer) {
             resultTextView.text = "Result:"

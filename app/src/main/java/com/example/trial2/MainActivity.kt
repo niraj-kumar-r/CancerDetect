@@ -5,6 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,7 +24,6 @@ import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
-import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
 import java.io.FileOutputStream
@@ -32,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     private val CAMERA_PERMISSION_REQUEST = 101
     private val GALLERY_PERMISSION_REQUEST = 102
     private val CAMERA_CAPTURE_REQUEST = 103
-    private var selectedImageBitmap: Bitmap? = null
     private var capturedImageBitmap: Bitmap? = null
     private lateinit var predictBtn: Button
 
@@ -59,15 +61,29 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     private val galleryActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val data: Intent? = result.data
                 val selectedImage = data?.data // Uri of the selected image
-                selectedImageBitmap = getBitmapFromUri(selectedImage)
-                displayImage(selectedImageBitmap)
+                capturedImageBitmap = getBitmapFromUri(selectedImage)
+                displayImage(capturedImageBitmap)
             }
         }
+
+    private fun convertToRGB(bitmap: Bitmap): Bitmap {
+        val rgbBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(rgbBitmap)
+        val paint = Paint()
+        val colorMatrix = ColorMatrix()
+        colorMatrix.setSaturation(0f)
+        val filter = ColorMatrixColorFilter(colorMatrix)
+        paint.colorFilter = filter
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+        return rgbBitmap
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,15 +92,15 @@ class MainActivity : AppCompatActivity() {
 
 
         val imageProcessor = ImageProcessor.Builder()
-            .add(ResizeOp(28, 28, ResizeOp.ResizeMethod.BILINEAR))
             .add(NormalizeOp(0f, 255f))
             .build()
 
 
         binding.btnProceed.setOnClickListener() {
             var tensorImage = TensorImage(DataType.FLOAT32)
-            tensorImage.load(capturedImageBitmap)
-
+            val postProcessedBitmap = Bitmap.createScaledBitmap(convertToRGB(capturedImageBitmap!!), 28, 28, true)
+            tensorImage.load(postProcessedBitmap)
+//
             tensorImage = imageProcessor.process(tensorImage)
 
             val model = CancerDetect.newInstance(this)
