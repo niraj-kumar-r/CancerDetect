@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        var imageProcessor = ImageProcessor.Builder()
+        val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(28, 28, ResizeOp.ResizeMethod.BILINEAR))
             .add(NormalizeOp(0f, 255f))
             .build()
