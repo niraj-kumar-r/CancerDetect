@@ -44,7 +44,7 @@ class ResultActivity : AppCompatActivity() {
         // Retrieve the result from your ML model (true for skin cancer, false for no cancer)...
 
         if (hasSkinCancer) {
-            resultTextView.text = "Result: Skin Cancer Detected"
+            resultTextView.text = "Result:"
             resultImageView.setImageResource(R.drawable.skin_cancer_image)
 
             val confidenceKeratosisMalignant = intent.getFloatExtra("confidenceKeratosisMalignant", 0.0f)
