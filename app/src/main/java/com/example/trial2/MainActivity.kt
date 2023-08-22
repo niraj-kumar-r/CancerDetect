@@ -84,9 +84,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnProceed.setOnClickListener() {
             var tensorImage = TensorImage(DataType.FLOAT32)
             tensorImage.load(capturedImageBitmap)
-//
+
             tensorImage = imageProcessor.process(tensorImage)
-//
+
             val model = CancerDetect.newInstance(this)
 //
             val inputfeature0 =
@@ -98,8 +98,7 @@ class MainActivity : AppCompatActivity() {
             val outputs = model.process(inputfeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer
             val intent = Intent(this, ResultActivity::class.java)
-            intent.putExtra("hasSkinCancer", true)
-//            TODO LATER
+
             intent.putExtra("confidenceKeratosisMalignant", outputFeature0.floatArray[0])
             intent.putExtra("confidenceKeratosisBenign", outputFeature0.floatArray[1])
             intent.putExtra("confidenceMelanocyticBenign", outputFeature0.floatArray[2])
