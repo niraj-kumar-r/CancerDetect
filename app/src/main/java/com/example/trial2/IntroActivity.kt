@@ -18,7 +18,7 @@ class IntroActivity : AppCompatActivity() {
         binding.btnNextIntro.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent) // Move to the main activity
-            //finish() // Close this intro activity
+            //finish() // Close this intro activity...
         }
     }
 }
