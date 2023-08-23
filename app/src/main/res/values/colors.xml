@@ -6,5 +6,6 @@
     <color name="orangered">#FC4900</color>
     <color name="gradient_start_color">#FF3131</color>
     <color name="gradient_end_color">#FF914D</color>
+    <color name="grey_color">#A9A9A9</color>
 
 </resources>
