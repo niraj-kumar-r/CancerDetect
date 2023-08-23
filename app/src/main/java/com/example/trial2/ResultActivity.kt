@@ -12,22 +12,22 @@ class ResultActivity : AppCompatActivity() {
 
     private fun isKeratosisMalignant(): Boolean {
         val confidence = intent.getFloatExtra("confidenceKeratosisMalignant", 0.0f)
-        return confidence >= 0.6
+        return confidence >= 0.69
     }
 
     private fun isKeratosisBenign(): Boolean {
         val confidence = intent.getFloatExtra("confidenceKeratosisBenign", 0.0f)
-        return confidence >= 0.6
+        return confidence >= 0.69
     }
 
     private fun isMelanocyticBenign(): Boolean {
         val confidence = intent.getFloatExtra("confidenceMelanocyticBenign", 0.0f)
-        return confidence >= 0.6
+        return confidence >= 0.69
     }
 
     private fun isMelanomaMalignant(): Boolean {
         val confidence = intent.getFloatExtra("confidenceMelanomaMalignant", 0.0f)
-        return confidence >= 0.6
+        return confidence >= 0.69
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +39,11 @@ class ResultActivity : AppCompatActivity() {
         val potentialCancerTextView: TextView = findViewById(R.id.descriptionTextView)
         val backButton: Button = findViewById(R.id.backButton)
 
-        val hasSkinCancer = isKeratosisBenign()||isMelanocyticBenign()||isMelanomaMalignant()||isKeratosisMalignant()
+        //val hasSkinCancer = isKeratosisBenign()||isMelanocyticBenign()||isMelanomaMalignant()||isKeratosisMalignant()
 
         // Retrieve the result from your ML model (true for skin cancer, false for no cancer)
 
-        if (hasSkinCancer) {
+//        if (hasSkinCancer) {
             resultTextView.text = "Result:"
             resultImageView.setImageResource(R.drawable.skin_cancer_image)
 
@@ -66,18 +66,21 @@ class ResultActivity : AppCompatActivity() {
 
             if (isKeratosisMalignant()) {
                 potentialCancerTextView.text = "Based on the image, you might have: Keratosis skin cancer, referral to the doctor is strongly advised"
-            } else if (isKeratosisBenign()) {
-                potentialCancerTextView.text = "Based on the image, you might not have Keratosis skin cancer but you can refer to the doctor for further confirmations"
-            } else if (isMelanocyticBenign()) {
-                potentialCancerTextView.text = "Based on the image, you might not have Melanoma skin cancer but you can refer to the doctor for further confirmations"
-            } else if (isMelanomaMalignant()) {
+            }
+            if (isMelanomaMalignant()) {
                 potentialCancerTextView.text = "Based on the image, you might have: Melanoma skin cancer, referral to the doctor is strongly advised"
             }
-        } else {
+//        } else {
             resultTextView.text = "Result: No Skin Cancer Detected"
+            if (isKeratosisBenign()) {
+                potentialCancerTextView.text = "Based on the image, you might not have Keratosis skin cancer but you can refer to the doctor for further confirmations"
+            }
+            if (isMelanocyticBenign()) {
+                potentialCancerTextView.text = "Based on the image, you might not have Melanoma skin cancer but you can refer to the doctor for further confirmations"
+            }
             resultImageView.setImageResource(R.drawable.no_skin_cancer_image)
             potentialCancerTextView.text = "Based on the image, you might have not have any skin cancer"
-        }
+        //}
 
 
 
