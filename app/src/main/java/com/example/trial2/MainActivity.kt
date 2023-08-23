@@ -13,6 +13,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                 val data: Intent? = result.data
                 capturedImageBitmap = data?.extras?.get("data") as? Bitmap
                 displayImage(capturedImageBitmap)
+
             }
         }
 
@@ -61,8 +64,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private val galleryActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent(),
+            ActivityResultCallback { uri: Uri? ->
+                capturedImageBitmap = getBitmapFromUri(uri)
+                displayImage(capturedImageBitmap)
+            })
+
+    private val galleryActivityResultLauncherOld =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val data: Intent? = result.data
@@ -97,33 +106,38 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnProceed.setOnClickListener() {
-            var tensorImage = TensorImage(DataType.FLOAT32)
-            val postProcessedBitmap = Bitmap.createScaledBitmap(convertToRGB(capturedImageBitmap!!), 28, 28, true)
-            tensorImage.load(postProcessedBitmap)
+            if (capturedImageBitmap == null) {
+                Toast.makeText(this, "Please upload an image!", Toast.LENGTH_SHORT).show()
+            } else {
+                var tensorImage = TensorImage(DataType.FLOAT32)
+                val postProcessedBitmap =
+                    Bitmap.createScaledBitmap(convertToRGB(capturedImageBitmap!!), 28, 28, true)
+                tensorImage.load(postProcessedBitmap)
 //
-            tensorImage = imageProcessor.process(tensorImage)
+                tensorImage = imageProcessor.process(tensorImage)
 
-            val model = CancerDetectAccurate.newInstance(this)
+                val model = CancerDetectAccurate.newInstance(this)
 //
-            val inputfeature0 =
-                TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
-            val byteBuffer: ByteBuffer = tensorImage.buffer
+                val inputfeature0 =
+                    TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
+                val byteBuffer: ByteBuffer = tensorImage.buffer
 
-            inputfeature0.loadBuffer(byteBuffer)
+                inputfeature0.loadBuffer(byteBuffer)
 //
-            val outputs = model.process(inputfeature0)
-            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-            val intent = Intent(this, ResultActivity::class.java)
+                val outputs = model.process(inputfeature0)
+                val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+                val intent = Intent(this, ResultActivity::class.java)
 
-            intent.putExtra("confidenceKeratosisMalignant", outputFeature0.floatArray[0])
-            intent.putExtra("confidenceKeratosisBenign", outputFeature0.floatArray[1])
-            intent.putExtra("confidenceMelanocyticBenign", outputFeature0.floatArray[2])
-            intent.putExtra("confidenceMelanomaMalignant", outputFeature0.floatArray[3])
+                intent.putExtra("confidenceKeratosisMalignant", outputFeature0.floatArray[0])
+                intent.putExtra("confidenceKeratosisBenign", outputFeature0.floatArray[1])
+                intent.putExtra("confidenceMelanocyticBenign", outputFeature0.floatArray[2])
+                intent.putExtra("confidenceMelanomaMalignant", outputFeature0.floatArray[3])
 //
-            startActivity(intent) // Move to the main activity
-            //finish() // Close this intro activity...
+                startActivity(intent) // Move to the main activity
+                //finish() // Close this intro activity...
 //
-            model.close()
+                model.close()
+            }
 
         }
 
@@ -205,18 +219,58 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkGalleryPermission() {
-        if (ContextCompat.checkSelfPermission(
-                /* context = */ this,
-                /* permission = */ Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                GALLERY_PERMISSION_REQUEST
-            )
+//        check sdk version and request permission
+//        val permissionReq = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU){
+//            Manifest.permission.READ_MEDIA_IMAGES
+//        } else {
+//            Manifest.permission.READ_EXTERNAL_STORAGE
+//        }
+//
+//        if (ContextCompat.checkSelfPermission(
+//                /* context = */ this,
+//                /* permission = */ permissionReq
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(permissionReq),
+//                GALLERY_PERMISSION_REQUEST
+//            )
+//        } else {
+//            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU){
+//                openGallery()
+//            } else {
+//                openGalleryOld()
+//            }
+//        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    /* context = */ this,
+                    /* permission = */ Manifest.permission.READ_MEDIA_IMAGES
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                    GALLERY_PERMISSION_REQUEST
+                )
+            } else {
+                openGallery()
+            }
         } else {
-            openGallery()
+            if (ContextCompat.checkSelfPermission(
+                    /* context = */ this,
+                    /* permission = */ Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    GALLERY_PERMISSION_REQUEST
+                )
+            } else {
+                openGalleryOld()
+            }
         }
     }
 
@@ -226,8 +280,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryActivityResultLauncher.launch(intent)
+        galleryActivityResultLauncher.launch("image/*")
+    }
+
+    private fun openGalleryOld() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryActivityResultLauncherOld.launch(galleryIntent)
     }
 
     private fun getBitmapFromUri(uri: Uri?): Bitmap? {
