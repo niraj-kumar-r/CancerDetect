@@ -1,56 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
+
+
+    <!-- Title TextView -->
+
+
+    <!-- CardView for Disclaimer -->
 
     <TextView
         android:id="@+id/introTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:text="SKIN CANCER DETECTION"
+        android:textColor="#7F00FF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="372dp"
+        android:layout_height="386dp"
+        android:layout_margin="16dp"
+        android:elevation="4dp"
+        app:cardBackgroundColor="#FF6600"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintTop_toBottomOf="@id/disclaimerTitleTextView"
+        tools:ignore="NotSibling">
 
-    <!-- Disclaimer TextView -->
 
-    <TextView
-        android:id="@+id/disclaimerTextView"
+    <!-- Vertical Layout for Disclaimer Content -->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="361dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:ignore="ExtraText"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="86dp">
+
+            <!-- DISCLAIMER Title -->
+            <TextView
+                android:id="@+id/disclaimerTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="#FF6600"
+                android:text="DISCLAIMER"
+                android:textColor="#5D4037"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Disclaimer Text -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+
+                android:background="#FF6600"> <!-- Set your desired background color here -->
+
+                <ScrollView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/disclaimerTextView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="16dp"
+                        android:textColor="#FFFFFF"
+                        android:text="This mobile application is designed to assist users in identifying potential signs of skin cancer for informational purposes only. It is important to note that this app is not a substitute for professional medical advice, diagnosis, or treatment.\n\nThe information provided by this app is based on visual recognition algorithms and general guidelines for identifying skin irregularities. However, it is crucial to consult a qualified healthcare professional, such as a dermatologist, for accurate diagnosis and appropriate medical guidance.\n\nUsers are advised not to solely rely on the app's assessments and to exercise caution when interpreting its results. Skin cancer is a complex medical condition that requires expert evaluation. Always seek the advice of a medical professional for any concerns related to your health.\n\nThe creators and developers of this app do not assume any responsibility for the accuracy, reliability, or effectiveness of the information provided. By using this app, you acknowledge that you understand the limitations of its capabilities and agree to use it at your own risk.\n\nIn no event shall the creators, developers, or associated parties be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of this app.\n\nBy clicking I Understand and using this app, you indicate that you have read and understood this disclaimer, and you agree to its terms and conditions.\n\nIf you have any concerns about your health or skin condition, please consult a medical professional immediately." />
+                </ScrollView>
+
+            </LinearLayout>
+
+            <!-- "I Understand" Button -->
+
+            <!-- "Start" Button -->
+            <CheckBox
+                android:id="@+id/checkBoxAgree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="#FFFFFF"
+                android:text="I Understand" />
+
+            <Button
+                android:id="@+id/btnStart"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Proceed" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use this app at your own risk."
-        app:layout_constraintTop_toBottomOf="@id/introTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="151dp"
+        tools:layout_editor_absoluteY="65dp" />
 
-    <!-- "I Agree" CheckBox -->
-
-    <!-- "Next" Button -->
-
-    <CheckBox
-        android:id="@+id/checkBoxAgree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="240dp"
-        android:text="I Agree"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/disclaimerTextView" />
-
-    <Button
-        android:id="@+id/btnNextIntro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:text="Next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkBoxAgree" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

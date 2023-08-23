@@ -4,5 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="safetyorange">#FF6600</color>
     <color name="orangered">#FC4900</color>
+    <color name="gradient_start_color">#FF3131</color>
+    <color name="gradient_end_color">#FF914D</color>
 
 </resources>

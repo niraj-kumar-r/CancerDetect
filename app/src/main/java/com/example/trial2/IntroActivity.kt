@@ -21,7 +21,7 @@ class IntroActivity : AppCompatActivity() {
             updateNextButtonColor()
         }
 
-        binding.btnNextIntro.setOnClickListener {
+        binding.btnStart.setOnClickListener {
             if (isDisclaimerAccepted) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent) // Move to the main activity
@@ -34,7 +34,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun updateNextButtonColor() {
-        val colorResId = if (isDisclaimerAccepted) R.color.safetyorange else R.color.orangered
-        binding.btnNextIntro.setBackgroundColor(resources.getColor(colorResId, theme))
+        val colorResId = if (isDisclaimerAccepted) R.color.white else R.color.orangered
+        binding.btnStart.setBackgroundColor(resources.getColor(colorResId, theme))
     }
 }
