@@ -33,6 +33,14 @@ class ResultActivity : AppCompatActivity() {
         return (adjustedConfidence) >= 9.8
     }
 
+    private fun calculateConfidencePercentage(currentConfidence: Float, threshold: Float, multiplier: Float): Float {
+        val adjustedConfidence = currentConfidence*multiplier
+        val actualFull = threshold/0.8f
+        val actualConfidence = (adjustedConfidence/actualFull)*100f
+        return actualConfidence
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main1)
@@ -58,24 +66,24 @@ class ResultActivity : AppCompatActivity() {
 
             val confidenceKeratosisMalignantTextView: TextView = findViewById(R.id.confidenceKeratosisMalignant)
             val adjustedconfidenceKeratosisMalignant = confidenceKeratosisMalignant*10000
-            confidenceKeratosisMalignantTextView.text = "Keratosis (Malignant) Confidence: $adjustedconfidenceKeratosisMalignant"
+            confidenceKeratosisMalignantTextView.text = "Keratosis (Malignant) Confidence: ${calculateConfidencePercentage(confidenceKeratosisMalignant, 40f, 10000f)}%"
 
             val confidenceKeratosisBenignTextView: TextView = findViewById(R.id.confidenceKeratosisBenign)
-            confidenceKeratosisBenignTextView.text = "Keratosis (Benign) Confidence: $confidenceKeratosisBenign"
+            confidenceKeratosisBenignTextView.text = "Keratosis (Benign) Confidence: ${calculateConfidencePercentage(confidenceKeratosisBenign, 40f, 100f)}%"
 
             val confidenceMelanocyticBenignTextView: TextView = findViewById(R.id.confidenceMelanocyticBenign)
-            confidenceMelanocyticBenignTextView.text = "Melanocytic Nevi (Benign) Confidence: $confidenceMelanocyticBenign"
+            confidenceMelanocyticBenignTextView.text = "Melanocytic Nevi (Benign) Confidence: ${calculateConfidencePercentage(confidenceMelanocyticBenign, 75f, 100f)}%"
 
             val confidenceMelanomaMalignantTextView: TextView = findViewById(R.id.confidenceMelanomaMalignant)
             val adjustedconfidenceMelanomaMalignant = confidenceMelanomaMalignant*1000
-            confidenceMelanomaMalignantTextView.text = "Melanoma (Malignant) Confidence: $adjustedconfidenceMelanomaMalignant"
+            confidenceMelanomaMalignantTextView.text = "Melanoma (Malignant) Confidence: ${calculateConfidencePercentage(confidenceMelanomaMalignant, 9.8f, 1000f)}%"
 
 //
 //            if (isMelanomaMalignant()) {
 //                potentialCancerTextView.text = "Based on the image, you might have: Melanoma skin cancer, referral to the doctor is strongly advised"
 //            }
 
-            potentialCancerTextView.text = "Based on the image, you might have: Melanoma skin cancer, referral to the doctor is strongly advised"
+            potentialCancerTextView.text = "Based on the image, you might have: Melanoma skin cancer, consultation to the doctor is strongly advised"
 
         } else {
             resultTextView.text = "Result:"
@@ -87,17 +95,17 @@ class ResultActivity : AppCompatActivity() {
 
             val confidenceKeratosisMalignantTextView: TextView = findViewById(R.id.confidenceKeratosisMalignant)
             val adjustedconfidenceKeratosisMalignant = confidenceKeratosisMalignant*10000
-            confidenceKeratosisMalignantTextView.text = "Keratosis (Malignant) Confidence: $adjustedconfidenceKeratosisMalignant"
+            confidenceKeratosisMalignantTextView.text = "Keratosis (Malignant) Confidence: ${calculateConfidencePercentage(confidenceKeratosisMalignant, 9.5f, 10000f)}%"
 
             val confidenceKeratosisBenignTextView: TextView = findViewById(R.id.confidenceKeratosisBenign)
-            confidenceKeratosisBenignTextView.text = "Keratosis (Benign) Confidence: $confidenceKeratosisBenign"
+            confidenceKeratosisBenignTextView.text = "Keratosis (Benign) Confidence: ${calculateConfidencePercentage(confidenceKeratosisBenign, 35f, 100f)}%"
 
             val confidenceMelanocyticBenignTextView: TextView = findViewById(R.id.confidenceMelanocyticBenign)
-            confidenceMelanocyticBenignTextView.text = "Melanocytic Nevi (Benign) Confidence: $confidenceMelanocyticBenign"
+            confidenceMelanocyticBenignTextView.text = "Melanocytic Nevi (Benign) Confidence: ${calculateConfidencePercentage(confidenceMelanocyticBenign, 95f, 100f)}%"
 
             val confidenceMelanomaMalignantTextView: TextView = findViewById(R.id.confidenceMelanomaMalignant)
             val adjustedconfidenceMelanomaMalignant = confidenceMelanomaMalignant*1000
-            confidenceMelanomaMalignantTextView.text = "Melanoma (Malignant) Confidence: $adjustedconfidenceMelanomaMalignant"
+            confidenceMelanomaMalignantTextView.text = "Melanoma (Malignant) Confidence: ${calculateConfidencePercentage(confidenceMelanomaMalignant, 15f, 1000f)}%"
 
 //            if (isKeratosisBenign()) {
 //                potentialCancerTextView.text = "Based on the image, you might not have Keratosis skin cancer but you can refer to the doctor for further confirmations"
@@ -106,12 +114,12 @@ class ResultActivity : AppCompatActivity() {
 //                potentialCancerTextView.text = "Based on the image, you might not have Melanoma skin cancer but you can refer to the doctor for further confirmations"
 //            }
 
-            if (isKeratosisMalignant()) {
-                potentialCancerTextView.text = "Based on the image, you might have Keratosis, you can refer the doctor if you still want to"
-            }
+//            if (isKeratosisMalignant()) {
+//                potentialCancerTextView.text = "Based on the image, you might have Keratosis, you can refer the doctor if you still want to"
+//            }
 
             resultImageView.setImageResource(R.drawable.no_skin_cancer_image)
-            potentialCancerTextView.text = "Based on the image, you might have Keratosis"
+            potentialCancerTextView.text = "Based on the image, you might have Keratosis or other skin lesion, you can consult the doctor if you still want to."
         }
 
 
