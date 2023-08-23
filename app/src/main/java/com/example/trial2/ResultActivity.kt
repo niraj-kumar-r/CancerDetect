@@ -83,6 +83,8 @@ class ResultActivity : AppCompatActivity() {
         //}
 
 
+        //The above code says that if the image is not a skin cancer image, then it will display the no skin cancer image and the text "Based on the image, you might not have any skin cancer"
+
 
         backButton.setOnClickListener {
             finish() // Go back to the previous activity
