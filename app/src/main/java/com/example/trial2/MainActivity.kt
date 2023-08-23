@@ -19,7 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.trial2.databinding.ActivityMainBinding
-import com.example.trial2.ml.CancerDetect
+import com.example.trial2.ml.CancerDetectAccurate
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 //
             tensorImage = imageProcessor.process(tensorImage)
 
-            val model = CancerDetect.newInstance(this)
+            val model = CancerDetectAccurate.newInstance(this)
 //
             val inputfeature0 =
                 TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
