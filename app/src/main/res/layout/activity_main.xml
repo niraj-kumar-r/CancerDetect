@@ -34,6 +34,7 @@
             android:layout_height="203dp"
             android:layout_marginEnd="56dp"
             android:backgroundTint="#FF6600"
+
             android:background="@drawable/main_button"
             android:text="Proceed to ML Model"
             app:layout_constraintBottom_toBottomOf="parent"
