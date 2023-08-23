@@ -30,8 +30,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Result: "
-        android:layout_gravity="center_horizontal"/>
+        android:text="RESULT: "
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shaded_background" />
 
     <TextView
         android:id="@+id/descriptionTextView"
@@ -39,7 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Based on the image, you might have: "
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@drawable/shaded_background" />
+
 
 
     <LinearLayout
