@@ -30,7 +30,7 @@ class ResultActivity : AppCompatActivity() {
         val confidence = intent.getFloatExtra("confidenceMelanomaMalignant", 0.0f)
         val adjustedConfidence = confidence*1000
 
-        return (confidence) >= 9.8
+        return (adjustedConfidence) >= 9.8
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
