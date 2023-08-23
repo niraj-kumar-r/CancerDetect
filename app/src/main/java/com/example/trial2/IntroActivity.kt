@@ -34,7 +34,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun updateNextButtonColor() {
-        val colorResId = if (isDisclaimerAccepted) R.color.white else R.color.orangered
+        val colorResId = if (isDisclaimerAccepted) R.color.black else R.color.orangered
         binding.btnStart.setBackgroundColor(resources.getColor(colorResId, theme))
     }
 }

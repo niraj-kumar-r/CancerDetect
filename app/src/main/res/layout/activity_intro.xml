@@ -23,25 +23,27 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="372dp"
-        android:layout_height="386dp"
+        android:layout_width="match_parent"
+        android:layout_height="398dp"
         android:layout_margin="16dp"
         android:elevation="4dp"
         app:cardBackgroundColor="#FF6600"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/disclaimerTitleTextView"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="NotSibling">
 
 
-    <!-- Vertical Layout for Disclaimer Content -->
+        <!-- Vertical Layout for Disclaimer Content -->
 
 
         <LinearLayout
@@ -62,9 +64,10 @@
                 android:layout_marginTop="8dp"
                 android:background="#FF6600"
                 android:text="DISCLAIMER"
-                android:textColor="#5D4037"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck" />
 
             <!-- Disclaimer Text -->
             <LinearLayout
@@ -85,8 +88,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginTop="16dp"
-                        android:textColor="#FFFFFF"
-                        android:text="This mobile application is designed to assist users in identifying potential signs of skin cancer for informational purposes only. It is important to note that this app is not a substitute for professional medical advice, diagnosis, or treatment.\n\nThe information provided by this app is based on visual recognition algorithms and general guidelines for identifying skin irregularities. However, it is crucial to consult a qualified healthcare professional, such as a dermatologist, for accurate diagnosis and appropriate medical guidance.\n\nUsers are advised not to solely rely on the app's assessments and to exercise caution when interpreting its results. Skin cancer is a complex medical condition that requires expert evaluation. Always seek the advice of a medical professional for any concerns related to your health.\n\nThe creators and developers of this app do not assume any responsibility for the accuracy, reliability, or effectiveness of the information provided. By using this app, you acknowledge that you understand the limitations of its capabilities and agree to use it at your own risk.\n\nIn no event shall the creators, developers, or associated parties be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of this app.\n\nBy clicking I Understand and using this app, you indicate that you have read and understood this disclaimer, and you agree to its terms and conditions.\n\nIf you have any concerns about your health or skin condition, please consult a medical professional immediately." />
+                        android:text="This mobile application is designed to assist users in identifying potential signs of skin cancer for informational purposes only. It is important to note that this app is not a substitute for professional medical advice, diagnosis, or treatment.\n\nThe information provided by this app is based on visual recognition algorithms and general guidelines for identifying skin irregularities. However, it is crucial to consult a qualified healthcare professional, such as a dermatologist, for accurate diagnosis and appropriate medical guidance.\n\nUsers are advised not to solely rely on the app's assessments and to exercise caution when interpreting its results. Skin cancer is a complex medical condition that requires expert evaluation. Always seek the advice of a medical professional for any concerns related to your health.\n\nThe creators and developers of this app do not assume any responsibility for the accuracy, reliability, or effectiveness of the information provided. By using this app, you acknowledge that you understand the limitations of its capabilities and agree to use it at your own risk.\n\nIn no event shall the creators, developers, or associated parties be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of this app.\n\nBy clicking I Understand and using this app, you indicate that you have read and understood this disclaimer, and you agree to its terms and conditions.\n\nIf you have any concerns about your health or skin condition, please consult a medical professional immediately."
+                        android:textColor="#FFFFFF" />
                 </ScrollView>
 
             </LinearLayout>
@@ -99,16 +102,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textColor="#FFFFFF"
-                android:text="I Understand" />
+                android:text="I Understand"
+                android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/btnStart"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Proceed" />
+                android:text="Start"
+                android:textColor="#FFFFFF"
+                />
 
 
         </LinearLayout>
@@ -117,12 +121,16 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="118dp"
+        app:layout_constraintBottom_toTopOf="@+id/introTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@mipmap/ic_launcher"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="65dp" />
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
