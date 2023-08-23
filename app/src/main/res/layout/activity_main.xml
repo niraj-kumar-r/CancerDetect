@@ -34,7 +34,7 @@
         android:layout_width="381dp"
         android:layout_height="363dp"
         android:layout_marginStart="16dp"
-        android:background="@color/deep_sky_blue_color"
+        android:background="@color/gradient_start_color"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="308dp"
         tools:ignore="MissingConstraints" />
