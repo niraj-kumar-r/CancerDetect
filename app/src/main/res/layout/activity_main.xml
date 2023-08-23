@@ -20,26 +20,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="417dp"
-        android:layout_height="281dp"
+        android:layout_width="401dp"
+        android:layout_height="290dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
         <Button
             android:id="@+id/btnProceed"
-            android:layout_width="157dp"
+            android:layout_width="134dp"
             android:layout_height="203dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="56dp"
+            android:backgroundTint="#FF6600"
             android:background="@drawable/main_button"
             android:text="Proceed to ML Model"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.706" />
+            app:layout_constraintVertical_bias="0.643" />
 
         <Button
             android:id="@+id/btnCapture"
