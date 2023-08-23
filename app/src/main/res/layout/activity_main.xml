@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:ignore="ExtraText">
+    android:background="@color/light_light_pink_color"
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,59 +19,53 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.64" />
 
-    <!-- Set the background color to blue --><![CDATA[
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.533"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.98">
-
-    ]]>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="381dp"
         android:layout_height="363dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/gradient_start_color"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="308dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnProceed"
-        android:layout_width="157dp"
-        android:layout_height="203dp"
-        android:layout_marginEnd="28dp"
-        android:background="@drawable/main_button"
-        android:text="Proceed to ML Model"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.888" />
+        app:layout_constraintVertical_bias="0.98">
 
-    <Button
-        android:id="@+id/btnCapture"
-        android:layout_width="135dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="384dp"
-        android:text="Capture Pic"
-        app:layout_constraintEnd_toStartOf="@+id/btnProceed"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btnProceed"
+            android:layout_width="157dp"
+            android:layout_height="203dp"
+            android:layout_marginEnd="24dp"
+            android:text="Proceed to ML Model"
+            android:background="@drawable/main_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.706"
+            />
 
-    <Button
-        android:id="@+id/btnUpload"
-        android:layout_width="130dp"
-        android:layout_height="76dp"
-        android:text="Upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnProceed"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCapture"
-        app:layout_constraintVertical_bias="0.887" />
+        <Button
+            android:id="@+id/btnCapture"
+            android:layout_width="135dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="112dp"
+            android:text="Capture Pic"
+            app:layout_constraintEnd_toStartOf="@+id/btnProceed"
+            app:layout_constraintHorizontal_bias="0.569"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="130dp"
+            android:layout_height="76dp"
+            android:text="Upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnProceed"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCapture"
+            app:layout_constraintVertical_bias="0.365" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-

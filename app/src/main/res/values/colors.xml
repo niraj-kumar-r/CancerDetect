@@ -16,6 +16,7 @@
     <color name="deep_sky_blue_color">#00BFFF</color>
     <color name="deep_pink_color">#FF1493</color>
     <color name="Dodger_Blue_color">#2A95FF</color>
-
+    <color name="light_pink_color">#FFB6C1</color>
+    <color name="light_light_pink_color">#F9E8F2</color>
 
 </resources>
