@@ -144,15 +144,15 @@ class MainActivity : AppCompatActivity() {
         binding.btnCapture.setOnClickListener { checkCameraPermission() }
         binding.btnUpload.setOnClickListener { checkGalleryPermission() }
 
-        binding.btnEdit.setOnClickListener {
-            capturedImageBitmap?.let { bitmap ->
-                // Convert capturedImageBitmap to a Uri
-                val capturedImageUri = saveBitmapToTempUri(bitmap)
-                // Launch built-in image crop activity
-                val cropIntent = getCropImageIntent(capturedImageUri)
-                cropActivityResultLauncher.launch(cropIntent)
-            }
-        }
+//        binding.btnEdit.setOnClickListener {
+//            capturedImageBitmap?.let { bitmap ->
+//                // Convert capturedImageBitmap to a Uri
+//                val capturedImageUri = saveBitmapToTempUri(bitmap)
+//                // Launch built-in image crop activity
+//                val cropIntent = getCropImageIntent(capturedImageUri)
+//                cropActivityResultLauncher.launch(cropIntent)
+//            }
+//        }
 
     }
 
