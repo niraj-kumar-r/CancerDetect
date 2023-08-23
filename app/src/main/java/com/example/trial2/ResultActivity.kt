@@ -79,7 +79,7 @@ class ResultActivity : AppCompatActivity() {
                 potentialCancerTextView.text = "Based on the image, you might not have Melanoma skin cancer but you can refer to the doctor for further confirmations"
             }
             resultImageView.setImageResource(R.drawable.no_skin_cancer_image)
-            potentialCancerTextView.text = "Based on the image, you might have not have any skin cancer"
+            potentialCancerTextView.text = "Based on the image, you might not have any skin cancer"
         //}
 
 
