@@ -13,13 +13,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.trial2.databinding.ActivityMainBinding
-import com.example.trial2.ml.CancerDetectAccurate
+import com.example.trial2.ml.CancerDetect
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
@@ -63,14 +64,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private val galleryActivityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
-                val selectedImage = data?.data // Uri of the selected image
-                capturedImageBitmap = getBitmapFromUri(selectedImage)
+        registerForActivityResult(ActivityResultContracts.GetContent(),
+            ActivityResultCallback { uri: Uri? ->
+                capturedImageBitmap = getBitmapFromUri(uri)
                 displayImage(capturedImageBitmap)
-            }
-        }
+            })
 
     private fun convertToRGB(bitmap: Bitmap): Bitmap {
         val rgbBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
@@ -103,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 //
             tensorImage = imageProcessor.process(tensorImage)
 
-            val model = CancerDetectAccurate.newInstance(this)
+            val model = CancerDetect.newInstance(this)
 //
             val inputfeature0 =
                 TensorBuffer.createFixedSize(intArrayOf(1, 28, 28, 3), DataType.FLOAT32)
@@ -205,14 +203,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkGalleryPermission() {
+//        check sdk version and request permission
+        val permissionReq = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU){
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+
         if (ContextCompat.checkSelfPermission(
                 /* context = */ this,
-                /* permission = */ Manifest.permission.READ_EXTERNAL_STORAGE
+                /* permission = */ permissionReq
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                arrayOf(permissionReq),
                 GALLERY_PERMISSION_REQUEST
             )
         } else {
@@ -226,8 +231,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryActivityResultLauncher.launch(intent)
+        galleryActivityResultLauncher.launch("image/*")
     }
 
     private fun getBitmapFromUri(uri: Uri?): Bitmap? {
