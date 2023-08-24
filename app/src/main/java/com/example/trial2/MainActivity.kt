@@ -82,8 +82,6 @@ class MainActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val data: Intent? = result.data
                 capturedImageBitmap = data?.extras?.get("data") as? Bitmap
-//                imageUri = data?.extras?.get("data") as? Uri
-//                capturedImageBitmap = getBitmapFromUri(imageUri)
                 displayImage(capturedImageBitmap)
 
             }
@@ -96,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 imageUri = uri
                 capturedImageBitmap = getBitmapFromUri(imageUri)
                 displayImage(capturedImageBitmap)
-                launchImageCrop(uri!!)
+                launchImageCrop(imageUri!!)
             })
 
     private val galleryActivityResultLauncherOld =
@@ -106,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                 imageUri = data?.data // Uri of the selected image
                 capturedImageBitmap = getBitmapFromUri(imageUri)
                 displayImage(capturedImageBitmap)
+                launchImageCrop(imageUri!!)
             }
         }
 
