@@ -9,14 +9,14 @@
 
 
         <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="483dp"
+            android:layout_width="308dp"
+            android:layout_height="491dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="48dp"
             android:layout_marginTop="26dp"
-            android:layout_marginBottom="150dp"
+            android:layout_marginBottom="256dp"
             android:columnCount="2"
             android:rowCount="2"><![CDATA[>
 
@@ -110,7 +110,7 @@
                 android:layout_height="237dp"
                 android:layout_row="1"
                 android:layout_column="1"
-                android:layout_marginEnd="0dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="245dp"
                 android:background="@color/green_color"
                 android:orientation="vertical"

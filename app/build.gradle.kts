@@ -50,6 +50,8 @@ android {
 
 dependencies {
     implementation ("androidx.databinding:databinding-runtime:4.0.0")
+    implementation ("com.theartofdev.edmodo:android-image-cropper:4.0.0")
+
     implementation ("androidx.activity:activity:1.3.1")
     implementation ("androidx.fragment:fragment:1.4.0")
     implementation("androidx.core:core-ktx:1.9.0")
