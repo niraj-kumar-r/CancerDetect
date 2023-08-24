@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_EXPRESSION")
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,6 +22,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
     buildFeatures {
@@ -46,7 +49,7 @@ android {
 }
 
 dependencies {
-
+    implementation ("androidx.databinding:databinding-runtime:4.0.0")
     implementation ("androidx.activity:activity:1.3.1")
     implementation ("androidx.fragment:fragment:1.4.0")
     implementation("androidx.core:core-ktx:1.9.0")

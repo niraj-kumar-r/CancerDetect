@@ -18,5 +18,7 @@
     <color name="Dodger_Blue_color">#2A95FF</color>
     <color name="light_pink_color">#FFB6C1</color>
     <color name="light_light_pink_color">#F9E8F2</color>
-
+    <color name="boxColor">#F0F0F0</color>
+    <color name="backgroundGray">#F0F0F0</color>
+    <color name="colorPrimary">#007ACC</color>
 </resources>

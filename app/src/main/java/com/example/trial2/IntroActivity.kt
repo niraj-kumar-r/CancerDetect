@@ -23,8 +23,8 @@ class IntroActivity : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             if (isDisclaimerAccepted) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent) // Move to the main activity
+                val intent = Intent(this, SecondPageActivity::class.java)
+                startActivity(intent)  // Move to the main activity
                 finish() // Close this intro activity
             } else {
                 // Show a warning message

@@ -1,5 +1,6 @@
 package com.example.trial2
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -100,7 +101,9 @@ class ResultActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            finish() // Go back to the previous activity
+            val intent = Intent(this, SecondPageActivity::class.java)
+            startActivity(intent) // Start the SecondPageActivity
+            finish() // Close the ResultActivity
         }
     }
 }

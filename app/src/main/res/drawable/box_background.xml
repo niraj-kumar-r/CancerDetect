@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Background colors for each box -->
+    <solid android:color="@color/boxColor" /> <!-- Define this color in your colors.xml -->
+
+   <corners android:radius="16dp" /> <!-- Set the corner radius to 16dp for rounded corners -->
+</shape>
