@@ -35,24 +35,33 @@
             android:layout_width="157dp"
             android:layout_height="203dp"
             android:layout_marginEnd="24dp"
-            android:text="Proceed to ML Model"
             android:background="@drawable/main_button"
+            android:text="Proceed to ML Model"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.706"
-            />
+            app:layout_constraintVertical_bias="0.706" />
 
         <Button
             android:id="@+id/btnCapture"
             android:layout_width="135dp"
             android:layout_height="81dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="44dp"
             android:text="Capture Pic"
             app:layout_constraintEnd_toStartOf="@+id/btnProceed"
             app:layout_constraintHorizontal_bias="0.569"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="130dp"
+            android:layout_height="76dp"
+            android:text="back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUpload"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="42dp" />
 
         <Button
             android:id="@+id/btnUpload"
@@ -61,10 +70,12 @@
             android:text="Upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnProceed"
-            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnCapture"
-            app:layout_constraintVertical_bias="0.365" />
+            app:layout_constraintVertical_bias="0.179" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

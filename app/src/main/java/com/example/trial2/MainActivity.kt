@@ -139,6 +139,10 @@ class MainActivity : AppCompatActivity() {
             .add(NormalizeOp(0f, 255f))
             .build()
 
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this, SecondPageActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.btnProceed.setOnClickListener() {
             if (capturedImageBitmap == null) {
