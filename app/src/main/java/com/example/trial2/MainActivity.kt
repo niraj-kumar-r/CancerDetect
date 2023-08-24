@@ -21,6 +21,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.trial2.databinding.ActivityMainBinding
 import com.example.trial2.ml.CancerDetectAccurate
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
@@ -35,9 +37,45 @@ class MainActivity : AppCompatActivity() {
     private val GALLERY_PERMISSION_REQUEST = 102
     private val CAMERA_CAPTURE_REQUEST = 103
     private var capturedImageBitmap: Bitmap? = null
+    private var imageUri: Uri? = null
     private lateinit var predictBtn: Button
 
     private lateinit var binding: ActivityMainBinding
+
+    @Deprecated("This is deprecated")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            CAMERA_CAPTURE_REQUEST -> {
+                if (resultCode == RESULT_OK) {
+                    capturedImageBitmap = data?.extras?.get("data") as? Bitmap
+                    displayImage(capturedImageBitmap)
+                }
+            }
+
+            GALLERY_PERMISSION_REQUEST -> {
+                if (resultCode == RESULT_OK) {
+                    imageUri = data?.data // Uri of the selected image
+                    capturedImageBitmap = getBitmapFromUri(imageUri)
+                    displayImage(capturedImageBitmap)
+                }
+            }
+
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == RESULT_OK) {
+                    result.uri?.let {
+                        imageUri = it
+                        capturedImageBitmap = getBitmapFromUri(imageUri)
+                        displayImage(capturedImageBitmap)
+                    }
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    val error = result.error
+                }
+            }
+        }
+    }
 
     private val cameraActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -49,34 +87,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    @Deprecated("This is deprecated")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CAMERA_CAPTURE_REQUEST || requestCode == GALLERY_PERMISSION_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                capturedImageBitmap = data?.extras?.get("data") as? Bitmap
-                displayImage(capturedImageBitmap)
-            }
-        }
-    }
-
 
     private val galleryActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent(),
             ActivityResultCallback { uri: Uri? ->
-                capturedImageBitmap = getBitmapFromUri(uri)
+                imageUri = uri
+                capturedImageBitmap = getBitmapFromUri(imageUri)
                 displayImage(capturedImageBitmap)
+                launchImageCrop(imageUri!!)
             })
 
     private val galleryActivityResultLauncherOld =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val data: Intent? = result.data
-                val selectedImage = data?.data // Uri of the selected image
-                capturedImageBitmap = getBitmapFromUri(selectedImage)
+                imageUri = data?.data // Uri of the selected image
+                capturedImageBitmap = getBitmapFromUri(imageUri)
                 displayImage(capturedImageBitmap)
+                launchImageCrop(imageUri!!)
             }
         }
+
+    private fun launchImageCrop(uri: Uri) {
+        CropImage.activity(uri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .setCropShape(CropImageView.CropShape.RECTANGLE)
+            .start(this)
+    }
 
     private fun convertToRGB(bitmap: Bitmap): Bitmap {
         val rgbBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
