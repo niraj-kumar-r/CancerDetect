@@ -50,7 +50,6 @@ android {
 
 dependencies {
     implementation ("androidx.databinding:databinding-runtime:4.0.0")
-    implementation ("com.theartofdev.edmodo:android-image-cropper:4.0.0")
 
     implementation ("androidx.activity:activity:1.3.1")
     implementation ("androidx.fragment:fragment:1.4.0")
@@ -65,4 +64,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+
+
 }

@@ -10,7 +10,7 @@
     <color name="blue_color">#2196F3</color>
     <color name="green_color">#4CAF50</color>
     <color name="red_color">#F44336</color>
-    <color name="yellow_color">#FFEB3B</color>
+    <color name="yellow_color">#F8F27F</color>
     <color name="purple_color">#9C27B0</color>
     <color name="pink_color">#E91E63</color>
     <color name="deep_sky_blue_color">#00BFFF</color>
@@ -21,4 +21,6 @@
     <color name="boxColor">#F0F0F0</color>
     <color name="backgroundGray">#F0F0F0</color>
     <color name="colorPrimary">#007ACC</color>
+    <color name="light_yellow">#F88C3A</color>
+
 </resources>
