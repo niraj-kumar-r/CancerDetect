@@ -32,8 +32,8 @@
 
         <Button
             android:id="@+id/btnProceed"
-            android:layout_width="157dp"
-            android:layout_height="203dp"
+            android:layout_width="155dp"
+            android:layout_height="247dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/main_button"
             android:text="Proceed to ML Model"
@@ -45,28 +45,31 @@
         <Button
             android:id="@+id/btnCapture"
             android:layout_width="135dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="44dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="88dp"
             android:text="Capture Pic"
             app:layout_constraintEnd_toStartOf="@+id/btnProceed"
-            app:layout_constraintHorizontal_bias="0.569"
+            app:layout_constraintHorizontal_bias="0.611"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="130dp"
-            android:layout_height="76dp"
-            android:text="back"
+            android:layout_width="135dp"
+            android:layout_height="65dp"
+            android:text="Back"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnProceed"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnUpload"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="42dp" />
+            app:layout_constraintVertical_bias="0.375"
+            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/btnUpload"
-            android:layout_width="130dp"
-            android:layout_height="76dp"
+            android:layout_width="135dp"
+            android:layout_height="65dp"
             android:text="Upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnProceed"
