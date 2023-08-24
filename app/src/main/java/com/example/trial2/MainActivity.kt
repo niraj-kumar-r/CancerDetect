@@ -19,7 +19,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.example.trial2.databinding.ActivityMainBinding
 import com.example.trial2.ml.CancerDetectAccurate
 import org.tensorflow.lite.DataType
@@ -27,8 +26,6 @@ import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import java.io.File
-import java.io.FileOutputStream
 import java.nio.ByteBuffer
 
 
@@ -144,63 +141,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnCapture.setOnClickListener { checkCameraPermission() }
         binding.btnUpload.setOnClickListener { checkGalleryPermission() }
 
-//        binding.btnEdit.setOnClickListener {
-//            capturedImageBitmap?.let { bitmap ->
-//                // Convert capturedImageBitmap to a Uri
-//                val capturedImageUri = saveBitmapToTempUri(bitmap)
-//                // Launch built-in image crop activity
-//                val cropIntent = getCropImageIntent(capturedImageUri)
-//                cropActivityResultLauncher.launch(cropIntent)
-//            }
-//        }
-
     }
-
-    private fun getCropImageIntent(sourceUri: Uri): Intent {
-        val outputUri = getTempUri() // Temporary Uri for the cropped image
-        val cropIntent = Intent("com.android.camera.action.CROP")
-        cropIntent.setDataAndType(sourceUri, "image/*")
-        cropIntent.putExtra("crop", "true")
-        cropIntent.putExtra("aspectX", 1)
-        cropIntent.putExtra("aspectY", 1)
-        cropIntent.putExtra("outputX", 256) // Desired output width
-        cropIntent.putExtra("outputY", 256) // Desired output height
-        cropIntent.putExtra("return-data", true)
-        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri) // Set the output Uri
-        cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // Grant read permission for Uri
-        return cropIntent
-    }
-
-    private fun getTempUri(): Uri {
-        val cacheDir = externalCacheDir ?: cacheDir
-        val tempFile = File.createTempFile("crop_temp", ".jpg", cacheDir)
-        return FileProvider.getUriForFile(this, "${packageName}.provider", tempFile)
-    }
-
-
-    private val cropActivityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
-                val croppedImageUri: Uri? = data?.data
-                if (croppedImageUri != null) {
-                    // Load the cropped image and display it
-                    val croppedBitmap = getBitmapFromUri(croppedImageUri)
-                    displayImage(croppedBitmap)
-                }
-            }
-        }
-
-
-    private fun saveBitmapToTempUri(bitmap: Bitmap?): Uri {
-        val cacheDir = externalCacheDir ?: cacheDir
-        val tempFile = File.createTempFile("capture_temp", ".jpg", cacheDir)
-        val outputStream = FileOutputStream(tempFile)
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-        outputStream.close()
-        return FileProvider.getUriForFile(this, "${packageName}.provider", tempFile)
-    }
-
 
     private fun checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(
@@ -219,30 +160,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkGalleryPermission() {
-//        check sdk version and request permission
-//        val permissionReq = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU){
-//            Manifest.permission.READ_MEDIA_IMAGES
-//        } else {
-//            Manifest.permission.READ_EXTERNAL_STORAGE
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(
-//                /* context = */ this,
-//                /* permission = */ permissionReq
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            ActivityCompat.requestPermissions(
-//                this,
-//                arrayOf(permissionReq),
-//                GALLERY_PERMISSION_REQUEST
-//            )
-//        } else {
-//            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU){
-//                openGallery()
-//            } else {
-//                openGalleryOld()
-//            }
-//        }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     /* context = */ this,
